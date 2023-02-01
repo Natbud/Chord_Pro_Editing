@@ -8,6 +8,7 @@ directory = os.fsencode(directory_in_str)
 updated_text = []
 added_comment = []
 new_filename = []
+cleaned_file_list = []
 
 # Function to split by paragraph (pulled from online)
 def split_paragraph2(input_lines):
@@ -35,15 +36,26 @@ for file in os.listdir(directory):
 
             
             #NOW MAIN CODE TO EDIT EACH FILE:
+            #SOME PRE EDITING NEEDED TO CLEAN UP FILE FIRST:
+            for line in file_list:
+                if line[0] == "{":
+                    newline = str("\n"+line+"\n\n")
+                    cleaned_file_list.append(newline)
+                else:
+                    cleaned_file_list.append(line)
+            
+            
+            x = 1            
 
             #Split into paragraphs calling function and add comments:
-            for p, paragraph in enumerate(split_paragraph2(file_list)):
-                if paragraph[0][0]=="{":
-                   updated_text.append(paragraph)
+            for p, parag in enumerate(split_paragraph2(cleaned_file_list)):
+                if parag[0][0]=="{":
+                   updated_text.append(parag)
                 else:
-                    added_comment = f"\n{{comment: SECTION {p}}}\n"
+                    added_comment = f"\n{{comment: SECTION {x}}}\n"
                     updated_text.append(added_comment)
-                    updated_text.append(paragraph)
+                    updated_text.append(parag)
+                    x +=1
                     #print(updated_text)
 
             
