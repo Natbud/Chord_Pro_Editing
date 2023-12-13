@@ -25,6 +25,7 @@ def split_paragraph2(input_lines):
 
 #Iterate through all the files:   
 for file in os.listdir(directory):
+    cleaned_file_list = []
     updated_text = []
     filename = str(os.fsdecode(file))
     if filename.endswith(".pro"): 
@@ -52,7 +53,8 @@ for file in os.listdir(directory):
                 if parag[0][0]=="{":
                    updated_text.append(parag)
                 else:
-                    added_comment = f"\n{{comment: SECTION {x}}}\n"
+                    #added_comment = f"\n{{comment: SECTION {x}}}\n"
+                    added_comment = f"\n{{comment: }}\n"
                     updated_text.append(added_comment)
                     updated_text.append(parag)
                     x +=1
